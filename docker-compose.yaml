@@ -32,7 +32,7 @@ services:
     build:
       context: bridge
       dockerfile: Dockerfile
-    command: ros2 run ros1_bridge dynamic_bridge
+    command: ros2 run ros1_bridge dynamic_bridge --bridge-all-topics
     network_mode: host
     container_name: bridge_container
     depends_on: 
