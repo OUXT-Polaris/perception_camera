@@ -6,7 +6,7 @@ services:
     build:
       context: perception_nodes
       dockerfile: Dockerfile
-    command: "roscore"
+    command: roscore
     network_mode: host
     container_name: perception_nodes_container
     runtime: nvidia
