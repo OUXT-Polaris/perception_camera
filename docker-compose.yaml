@@ -6,7 +6,7 @@ services:
     build:
       context: perception_nodes
       dockerfile: Dockerfile
-    command: "rostopic pub -r 10 /cmd_vel geometry_msgs/Twist  '{linear:  {x: 0.1, y: 0.0, z: 0.0}, angular: {x: 0.0,y: 0.0,z: 0.0}}'"
+    command: "roscore"
     network_mode: host
     container_name: perception_nodes_container
     runtime: nvidia
@@ -17,7 +17,19 @@ services:
       - ROS_IP=127.0.0.1
     privileged: true
     restart: on-failure
-
+  publisher:
+    build:
+      context: bridge
+      dockerfile: Dockerfile
+    command: "rostopic pub -r 10 /cmd_vel geometry_msgs/Twist  '{linear:  {x: 0.1, y: 0.0, z: 0.0}, angular: {x: 0.0,y: 0.0,z: 0.0}}'"
+    network_mode: host
+    container_name: publisher_container
+    depends_on: 
+      - perception_nodes
+    environment:
+      - ROS_MASTER_URI=http://127.0.0.1:11311
+      - ROS_IP=127.0.0.1
+    restart: on-failure
   bridge:
     build:
       context: bridge
@@ -32,3 +44,4 @@ services:
       - ROS_IP=127.0.0.1
       - ROS_DOMAIN_ID=0
     restart: on-failure
+
