@@ -1,1 +1,1 @@
-FROM ros/galactic-ros1-bridge
+FROM ros:galactic-ros1-bridge
