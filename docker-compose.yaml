@@ -5,13 +5,13 @@ services:
   bridge:
     build:
       context: bridge
-      dockerfile: bridge/Dockerfile
+      dockerfile: Dockerfile
     container_name: bridge_container
 
   perception_nodes:
     build:
       context: perception_nodes
-      dockerfile: perception_nodes/Dockerfile
+      dockerfile: Dockerfile
     container_name: perception_nodes_container
     runtime: nvidia
     environment:
