@@ -1,1 +1,1 @@
-FROM nvcr.io/nvidia/l4t-ml:r32.5.0-py3
+FROM dustynv/ros:melodic-ros-base-l4t-r32.5.0
