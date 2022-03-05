@@ -34,6 +34,7 @@ services:
       dockerfile: Dockerfile
     command: ros2 run ros1_bridge dynamic_bridge --bridge-all-topics
     network_mode: host
+    ipc: host
     container_name: bridge_container
     depends_on: 
       - perception_nodes
