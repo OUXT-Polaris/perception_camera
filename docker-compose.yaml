@@ -33,7 +33,10 @@ services:
       context: bridge
       dockerfile: Dockerfile
     command: ros2 run ros1_bridge dynamic_bridge --bridge-all-topics
-    network_mode: host
+    network_mode: bridge
+    networks:
+      app_net:
+        ipv4_address: 192.168.0.64
     ipc: host
     pid: host
     container_name: bridge_container
@@ -45,3 +48,14 @@ services:
       - ROS_DOMAIN_ID=100
     restart: on-failure
 
+networks:
+  vlan:
+    name: macnet
+    driver: macvlan
+    driver_opts:
+      parent: eth0
+    ipam:
+      config:
+        - subnet: 192.168.0.1/24
+          gateway: 192.168.0.1
+          ip_range: 192.168.0.64/27
