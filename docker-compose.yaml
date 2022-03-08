@@ -2,63 +2,13 @@
   
 version: '2.3'
 services:
-  perception_nodes:
+  perseption_camera:
     build:
-      context: perception_nodes
+      context: perception_camera
       dockerfile: Dockerfile
-    command: roscore
-    network_mode: host
-    container_name: perception_nodes_container
-    runtime: nvidia
+    tty: true
+    container_name: perception_camera_container
     environment:
-      - NVIDIA_VISIBLE_DEVICES=all
-      - NVIDIA_DRIVER_CAPABILITIES=all
-      - ROS_MASTER_URI=http://127.0.0.1:11311
-      - ROS_IP=127.0.0.1
-    privileged: true
-    restart: on-failure
-  publisher:
-    image: ros:melodic
-    command: "rostopic pub -r 10 /cmd_vel geometry_msgs/Twist  '{linear:  {x: 0.1, y: 0.0, z: 0.0}, angular: {x: 0.0,y: 0.0,z: 0.0}}'"
-    network_mode: host
-    container_name: publisher_container
-    depends_on: 
-      - perception_nodes
-    environment:
-      - ROS_MASTER_URI=http://127.0.0.1:11311
-      - ROS_IP=127.0.0.1
-    restart: on-failure
-  bridge:
-    build:
-      context: bridge
-      dockerfile: Dockerfile
-    command: ros2 run ros1_bridge dynamic_bridge --bridge-all-topics
-    network_mode: bridge
-    networks:
-      app_net:
-        ipv4_address: 192.168.0.64
-    ipc: host
-    pid: host
-    container_name: bridge_container
-    depends_on: 
-      - perception_nodes
-    environment:
-      - ROS_MASTER_URI=http://127.0.0.1:11311
-      - ROS_IP=127.0.0.1
-      - ROS_DOMAIN_ID=100
-    volumes:
-      # to use devices
-      - /dev:/dev
+      - HOST_IP=192.168.0.199
     restart: on-failure
 
-networks:
-  vlan:
-    name: macnet
-    driver: macvlan
-    driver_opts:
-      parent: eth0
-    ipam:
-      config:
-        - subnet: 192.168.0.1/24
-          gateway: 192.168.0.1
-          ip_range: 192.168.0.64/27
