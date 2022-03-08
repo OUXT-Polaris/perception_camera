@@ -46,6 +46,9 @@ services:
       - ROS_MASTER_URI=http://127.0.0.1:11311
       - ROS_IP=127.0.0.1
       - ROS_DOMAIN_ID=100
+    volumes:
+      # to use devices
+      - /dev:/dev
     restart: on-failure
 
 networks:
