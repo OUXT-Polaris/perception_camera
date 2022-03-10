@@ -1,0 +1,26 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.158.0/containers/docker-existing-docker-compose
+// If you want to run as a non-root user in the container, see .devcontainer/docker-compose.yml.
+{
+	"name": "perception_camera_container",
+	"dockerComposeFile": [
+		"../docker-compose.yml"
+	],
+	"service": "dev",
+	"remoteUser": "root",
+	"workspaceFolder": "/",
+	"extensions": [
+	],
+	"settings": {
+		"python.linting.pylintEnabled": false,
+		"python.linting.flake8Enabled": true,
+		"editor.formatOnSave": true,
+		"python.linting.flake8Args": [
+			"--max-line-length=150"
+		],
+		"eslint.workingDirectories": [
+			{ "mode": "auto" }
+		],
+		"cfnLint.path": "/home/jmc-dev/.pyenv/shims/cfn-lint",
+	}
+}
